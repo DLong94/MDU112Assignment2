@@ -10,6 +10,11 @@ namespace MDU112Assignment2
     {
         static void Main(string[] args)
         {
+            //Create and intialise battle scenario
+
+            //Loop battle scenario until there is a winning team
+
+            //Ask to replay battle
         }
     }
 }
