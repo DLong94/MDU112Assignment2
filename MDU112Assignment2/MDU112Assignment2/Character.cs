@@ -12,6 +12,7 @@ namespace MDU112Assignment2
         private int Stamina;
         private int Strength;
         private int Acuity;
+        private int _Health;
 
         public Character()
         {
@@ -22,15 +23,11 @@ namespace MDU112Assignment2
             Strength = rand.Next(5, 16);
             Acuity = rand.Next(5, 16);
 
-            //Call function that allocates random attributes
+            //Set Health
+            Health = Stamina * 10;
         }
 
         //Functions to retrieve stats
-        private int Health
-        {
-            get { return Stamina * 10; }
-        }
-
         private int Speed
         {
             get { return Agility * 2; }
@@ -38,17 +35,25 @@ namespace MDU112Assignment2
 
         private double Damage
         {
-            get { return Strength * 1.5; }
+            get { return Convert.ToInt32(Strength * 1.5); }
         }
 
         private double CritChance
         {
             get { return Acuity * 0.01; }
         }
+
+        //Health is the only stat that will change
+        private int Health
+        {
+            get { return _Health; }
+            set { _Health = value; }
+        }
         //Function to get stats, automatically converting attributes to stats
-
-        //Allow game to get attributes? only stats?
-
+        public void Details()
+        {
+            Console.WriteLine("This Character has " + this.Health + " health, " + this.Speed + " speed, " + this.Damage + " damage and " + this.CritChance + " crit chance");
+        }
         //Function to calculate a battle scenario? input, target character
     }
 }
