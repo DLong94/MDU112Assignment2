@@ -14,26 +14,24 @@ namespace MDU112Assignment2
         private int Acuity;
         private int _Health;
 
-        public Character()
+        public Character(int agility, int stamina, int strength, int acuity)
         {
-            Random rand = new Random();
-
-            Agility = rand.Next(5, 16);
-            Stamina = rand.Next(5, 16);
-            Strength = rand.Next(5, 16);
-            Acuity = rand.Next(5, 16);
+            Agility = agility;
+            Stamina = stamina;
+            Strength = strength;
+            Acuity = acuity;
 
             //Set Health
             Health = Stamina * 10;
         }
 
         //Functions to retrieve stats
-        private int Speed
+        private double DodgeChance
         {
-            get { return Agility * 2; }
+            get { return Agility * 0.01; }
         }
 
-        private double Damage
+        private int Damage
         {
             get { return Convert.ToInt32(Strength * 1.5); }
         }
@@ -52,7 +50,49 @@ namespace MDU112Assignment2
         //Function to get stats, automatically converting attributes to stats
         public void Details()
         {
-            Console.WriteLine("This Character has " + this.Health + " health, " + this.Speed + " speed, " + this.Damage + " damage and " + this.CritChance + " crit chance");
+            Console.WriteLine("Character has " + this.Health + " health, " + this.DodgeChance + " Dodge Chance, " + this.Damage + " damage and " + this.CritChance + " crit chance");
+        }
+        
+        //Returns true or false whether character is dead
+        public bool TakesDamage(int Dmg)
+        {
+            Console.WriteLine("Character Takes " + Dmg + " damage!");
+            this.Health -= Dmg;
+            if (this.Health > 0)
+            {
+                Console.WriteLine("Character is Alive with " + this._Health + " health!");
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Character has DIED!");
+                return true;
+            }
+        }
+
+        //Returns true or false whether target is dead
+        public bool Attack(Character target)
+        {
+            int dmg = this.Damage;
+
+            Random rand = new Random();
+
+            bool crit = rand.NextDouble() < this.CritChance ? true : false;
+            bool dodge = rand.NextDouble() < target.DodgeChance ? true : false;
+
+            if (dodge)
+            {
+                Console.WriteLine("Character has dodged out of the way!");
+                return false;
+            }
+
+            if (crit)
+            {
+                Console.WriteLine("Character Crits!");
+                dmg *= 2;
+            }
+
+            return target.TakesDamage(dmg);
         }
         //Function to calculate a battle scenario? input, target character
     }
