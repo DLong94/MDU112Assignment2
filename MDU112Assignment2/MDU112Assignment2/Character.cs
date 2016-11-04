@@ -13,9 +13,11 @@ namespace MDU112Assignment2
         private int Strength;
         private int Acuity;
         private int _Health;
+        private string Name;
 
-        public Character(int agility, int stamina, int strength, int acuity)
+        public Character(int agility, int stamina, int strength, int acuity, string name = "Character")
         {
+            Name = name;
             Agility = agility;
             Stamina = stamina;
             Strength = strength;
@@ -50,22 +52,22 @@ namespace MDU112Assignment2
         //Function to get stats, automatically converting attributes to stats
         public void Details()
         {
-            Console.WriteLine("Character has " + this.Health + " health, " + this.DodgeChance + " Dodge Chance, " + this.Damage + " damage and " + this.CritChance + " crit chance");
+            Console.WriteLine(this.Name + " has " + this.Health + " health, " + this.DodgeChance + " Dodge Chance, " + this.Damage + " damage and " + this.CritChance + " crit chance");
         }
         
         //Returns true or false whether character is dead
         public bool TakesDamage(int Dmg)
         {
-            Console.WriteLine("Character Takes " + Dmg + " damage!");
+            Console.WriteLine(this.Name + " Takes " + Dmg + " damage!");
             this.Health -= Dmg;
             if (this.Health > 0)
             {
-                Console.WriteLine("Character is Alive with " + this._Health + " health!");
+                Console.WriteLine(this.Name + " is Alive with " + this._Health + " health!");
                 return false;
             }
             else
             {
-                Console.WriteLine("Character has DIED!");
+                Console.WriteLine(this.Name + " has DIED!");
                 return true;
             }
         }
@@ -82,18 +84,22 @@ namespace MDU112Assignment2
 
             if (dodge)
             {
-                Console.WriteLine("Character has dodged out of the way!");
+                Console.WriteLine(this.Name + " has dodged out of the way!");
                 return false;
             }
 
             if (crit)
             {
-                Console.WriteLine("Character Crits!");
+                Console.WriteLine(this.Name + " Crits!");
                 dmg *= 2;
             }
 
             return target.TakesDamage(dmg);
         }
-        //Function to calculate a battle scenario? input, target character
+        
+        public string GetCharacterName()
+        {
+            return this.Name;
+        }
     }
 }

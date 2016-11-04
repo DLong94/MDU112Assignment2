@@ -19,15 +19,17 @@ namespace MDU112Assignment2
             //Create a roster of 10 characters
             List<Character> roster = new List<Character>();
             Random RandomStatGenerator = new Random();
+            NameGenerator NameGenerator = new NameGenerator();
 
             for (int x = 0; x < ROSTER_SIZE; x++)
             {
+                string name = NameGenerator.GenerateName(2);
                 int agility = RandomStatGenerator.Next(MIN_STAT, MAX_STAT);
                 int stamina = RandomStatGenerator.Next(MIN_STAT, MAX_STAT);
                 int strength = RandomStatGenerator.Next(MIN_STAT, MAX_STAT);
                 int acuity = RandomStatGenerator.Next(MIN_STAT, MAX_STAT);
 
-                roster.Add(new Character(agility, stamina, strength, acuity));
+                roster.Add(new Character(agility, stamina, strength, acuity, name));
             }
 
             List<Character> Team1 = new List<Character>();
@@ -50,25 +52,25 @@ namespace MDU112Assignment2
                 if (rand.NextDouble() >= 0.5)
                 {
                     //Team 1 Attacks Team 2
-                    Console.WriteLine("Team 1 Character Attacks Team 2 Character");
+                    Console.WriteLine("Team 1 attacks Team 2");
                     TeamAttack(team1, team2, rand);
 
                     if (team1.Count() == 0 || team2.Count() == 0) break;
 
                     //Team 2 Attacks Team 1
-                    Console.WriteLine("Team 2 Character Attacks Team 1 Character");
+                    Console.WriteLine("Team 2 attacks Team 1");
                     TeamAttack(team2, team1, rand);
                 }
                 else
                 {
                     //Team 2 Attacks Team 1
-                    Console.WriteLine("Team 1 Character Attacks Team 2 Character");
+                    Console.WriteLine("Team 2 attacks Team 1"); 
                     TeamAttack(team2, team1, rand);
 
                     if (team1.Count() == 0 || team2.Count() == 0) break;
 
                     //Team 1 Attacks Team 2
-                    Console.WriteLine("Team 2 Character Attacks Team 1 Character");
+                    Console.WriteLine("Team 1 attacks Team 2");
                     TeamAttack(team1, team2, rand);
                 }
 
