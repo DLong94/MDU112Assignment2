@@ -14,6 +14,7 @@ namespace MDU112Assignment2
         private int Acuity;
         private int _Health;
         private string Name;
+        private Random rand;
 
         public Character(int agility, int stamina, int strength, int acuity, string name = "Character")
         {
@@ -22,6 +23,7 @@ namespace MDU112Assignment2
             Stamina = stamina;
             Strength = strength;
             Acuity = acuity;
+            rand = new Random();
 
             //Set Health
             Health = Stamina * 10;
@@ -77,20 +79,18 @@ namespace MDU112Assignment2
         {
             int dmg = this.Damage;
 
-            Random rand = new Random();
-
             bool crit = rand.NextDouble() < this.CritChance ? true : false;
             bool dodge = rand.NextDouble() < target.DodgeChance ? true : false;
 
             if (dodge)
             {
-                Console.WriteLine(this.Name + " has dodged out of the way!");
+                Console.WriteLine(this.GenerateDodgeText());
                 return false;
             }
 
             if (crit)
             {
-                Console.WriteLine(this.Name + " Crits!");
+                Console.WriteLine(this.GenerateCritText());
                 dmg *= 2;
             }
 
@@ -100,6 +100,32 @@ namespace MDU112Assignment2
         public string GetCharacterName()
         {
             return this.Name;
+        }
+
+        private string GenerateDodgeText()
+        {
+            string[] DodgeText = new string[] {
+                "At the last moment " + this.Name + " ducks underneath the attack dodging it",
+                "In a feat of agility " + this.Name + " leans backwards matrix style and dodges the attack",
+                this.Name + " throws themselves to the left dodging the attack barely",
+                this.Name + " calmly moves his head slightly to the left dodging the attack",
+                this.Name + " falls over clumsily but still manages to avoid the attack"
+            };
+
+            return DodgeText[rand.Next(DodgeText.Length)];
+        }
+
+        private string GenerateCritText()
+        {
+            string[] CritText = new string[]
+            {
+                this.Name + " lands a devastating blow on their target dealing CRITICAL damage.",
+                this.Name + " swings blindly somehow hitting their target and dealing CRITICAL damage.",
+                "With blinding speed " + this.Name + " attacks, dealing CRITICAL damage to their opponent.",
+                this.Name + " attacks with precision dealing CRITICAL damage to their opponent."
+            };
+
+            return CritText[rand.Next(CritText.Length)];
         }
     }
 }

@@ -106,7 +106,7 @@ namespace MDU112Assignment2
         {
             Random rand = new Random();
 
-            //Assign Characters from roster to team 1 and removethem from the roster list
+            //Assign Characters from roster to team 1 and remove them from the roster list
             Console.WriteLine("TEAM 1:");
             for (int x = 0; x < TEAM_SIZE; x++)
             {
