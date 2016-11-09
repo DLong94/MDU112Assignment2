@@ -29,6 +29,11 @@ namespace MDU112Assignment2
             Names.Add("baha");
         }
 
+        /// <summary>
+        /// Generates a string name for characters
+        /// </summary>
+        /// <param name="syllables">The number of syllables for character</param>
+        /// <returns>string name for character</returns>
         public string GenerateName(int syllables)
         {
             string name = "";

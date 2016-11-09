@@ -16,11 +16,12 @@ namespace MDU112Assignment2
         static void Main(string[] args)
         {
             
-            //Create a roster of 10 characters
+            //Initialise lists and objects
             List<Character> roster = new List<Character>();
             Random RandomStatGenerator = new Random();
             NameGenerator NameGenerator = new NameGenerator();
-
+            
+            //Creates a roster of ROSTER_SIZE with random stats and names
             for (int x = 0; x < ROSTER_SIZE; x++)
             {
                 string name = NameGenerator.GenerateName(2);
@@ -39,37 +40,38 @@ namespace MDU112Assignment2
             Battle(Team1, Team2);
         }
 
-        //Create Battle scenario between two teams
+        /// <summary>
+        /// Simulate the battle scenario between two teams
+        /// </summary>
+        /// <param name="team1">First Team</param>
+        /// <param name="team2">Second Team</param>
         private static void Battle(List<Character> team1, List<Character> team2)
         {
             Random rand = new Random();
             int round = 1;
 
+            //Continually loops until one team has no more characters remaining
             while (team1.Count() > 0 && team2.Count() > 0)
             {
                 Console.WriteLine("ROUND " + round);
                 //Selects which team attacks first
                 if (rand.NextDouble() >= 0.5)
                 {
-                    //Team 1 Attacks Team 2
                     Console.WriteLine("Team 1 attacks Team 2");
                     TeamAttack(team1, team2, rand);
 
                     if (team1.Count() == 0 || team2.Count() == 0) break;
 
-                    //Team 2 Attacks Team 1
                     Console.WriteLine("Team 2 attacks Team 1");
                     TeamAttack(team2, team1, rand);
                 }
                 else
                 {
-                    //Team 2 Attacks Team 1
                     Console.WriteLine("Team 2 attacks Team 1"); 
                     TeamAttack(team2, team1, rand);
 
                     if (team1.Count() == 0 || team2.Count() == 0) break;
 
-                    //Team 1 Attacks Team 2
                     Console.WriteLine("Team 1 attacks Team 2");
                     TeamAttack(team1, team2, rand);
                 }
@@ -78,7 +80,8 @@ namespace MDU112Assignment2
 
                 round++;
             }
-
+            
+            //Announces winning team (team with characters remaining)
             if (team1.Count() > 0)
             {
                 Console.WriteLine("TEAM 1 IS THE WINNER!");
@@ -90,9 +93,15 @@ namespace MDU112Assignment2
             Console.ReadLine();
         }
 
-        //Team Attacks Another team with randomly generated attacker and target
+        /// <summary>
+        /// Team attacks another team with a single randomly generated attacker and defender
+        /// </summary>
+        /// <param name="attackingTeam">The attacking team</param>
+        /// <param name="defendingTeam">The defending team</param>
+        /// <param name="rand">Random generator</param>
         private static void TeamAttack(List<Character> attackingTeam, List<Character> defendingTeam, Random rand)
         {
+            //Choose random attacker and defender and simulate attack
             int attacker = rand.Next(attackingTeam.Count());
             int target = rand.Next(defendingTeam.Count());
             if (attackingTeam[attacker].Attack(defendingTeam[target]))
@@ -101,7 +110,12 @@ namespace MDU112Assignment2
             }
         }
 
-        //Assign Characters to both teams from the roster
+        /// <summary>
+        /// Assign characters to both teams from the roster of characters
+        /// </summary>
+        /// <param name="roster">The roster of characters to choose from</param>
+        /// <param name="Team1">First team</param>
+        /// <param name="Team2">Second team</param>
         private static void AssignTeams(List<Character> roster, List<Character> Team1, List<Character> Team2)
         {
             Random rand = new Random();

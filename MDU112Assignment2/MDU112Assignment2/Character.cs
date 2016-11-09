@@ -13,6 +13,7 @@ namespace MDU112Assignment2
         private int Strength;
         private int Acuity;
         private int _Health;
+        private bool Dead;
         private string Name;
         private Random rand;
 
@@ -27,39 +28,58 @@ namespace MDU112Assignment2
 
             //Set Health
             Health = Stamina * 10;
+            Dead = false;
         }
 
-        //Functions to retrieve stats
-        private double DodgeChance
+        /// <summary>
+        /// The Dodge Chance calculated from the character's agility
+        /// </summary>
+        public double DodgeChance
         {
             get { return Agility * 0.01; }
         }
 
-        private int Damage
+        /// <summary>
+        /// The Damage calculated from the character's strength
+        /// </summary>
+        public int Damage
         {
             get { return Convert.ToInt32(Strength * 1.5); }
         }
 
-        private double CritChance
+        /// <summary>
+        /// Critical Hit Chance calculated from the character's acuity
+        /// </summary>
+        public double CritChance
         {
             get { return Acuity * 0.01; }
         }
 
-        //Health is the only stat that will change
-        private int Health
+        /// <summary>
+        /// Returns the current health of the character
+        /// </summary>
+        public int Health
         {
             get { return _Health; }
             set { _Health = value; }
         }
-        //Function to get stats, automatically converting attributes to stats
+        
+        /// <summary>
+        /// Writes to the console character details
+        /// </summary>
         public void Details()
         {
             Console.WriteLine(this.Name + " has " + this.Health + " health, " + this.DodgeChance + " Dodge Chance, " + this.Damage + " damage and " + this.CritChance + " crit chance");
         }
         
-        //Returns true or false whether character is dead
+        /// <summary>
+        /// Records and applies damage to the character
+        /// </summary>
+        /// <param name="Dmg"> The damage that the character receives </param>
+        /// <returns>true if character is dead and false otherwise</returns>
         public bool TakesDamage(int Dmg)
         {
+            //Applies damage to character and checks if health is greater than zero
             Console.WriteLine(this.Name + " Takes " + Dmg + " damage!");
             this.Health -= Dmg;
             if (this.Health > 0)
@@ -70,24 +90,29 @@ namespace MDU112Assignment2
             else
             {
                 Console.WriteLine(this.Name + " has DIED!");
+                Dead = true;
                 return true;
             }
         }
 
-        //Returns true or false whether target is dead
+        /// <summary>
+        /// Processes the current character attacking target character
+        /// </summary>
+        /// <param name="target"> Target character to be attacked</param>
+        /// <returns> true if target character is dead and false otherwise </returns>
         public bool Attack(Character target)
         {
             int dmg = this.Damage;
-
+            //Generates random values for crit and dodge check
             bool crit = rand.NextDouble() < this.CritChance ? true : false;
             bool dodge = rand.NextDouble() < target.DodgeChance ? true : false;
-
+            //Checks if the target character dodged
             if (dodge)
             {
                 Console.WriteLine(this.GenerateDodgeText());
                 return false;
             }
-
+            //Checks if the attacking character landed a critical hit
             if (crit)
             {
                 Console.WriteLine(this.GenerateCritText());
@@ -97,11 +122,19 @@ namespace MDU112Assignment2
             return target.TakesDamage(dmg);
         }
         
+        /// <summary>
+        /// Returns the character name
+        /// </summary>
+        /// <returns>string name of character</returns>
         public string GetCharacterName()
         {
             return this.Name;
         }
 
+        /// <summary>
+        /// Generates a dodge narration
+        /// </summary>
+        /// <returns>string of dodge narration text</returns>
         private string GenerateDodgeText()
         {
             string[] DodgeText = new string[] {
@@ -115,6 +148,10 @@ namespace MDU112Assignment2
             return DodgeText[rand.Next(DodgeText.Length)];
         }
 
+        /// <summary>
+        /// Generates a critical hit narration
+        /// </summary>
+        /// <returns>string of critical hit narration</returns>
         private string GenerateCritText()
         {
             string[] CritText = new string[]
