@@ -39,6 +39,11 @@ namespace MDU112Assignment2
             get { return Agility * 0.01; }
         }
 
+        public int Speed
+        {
+            get { return Agility * 10; }
+        }
+
         /// <summary>
         /// The Damage calculated from the character's strength
         /// </summary>
